@@ -13,7 +13,8 @@ export async function GET(request: Request): Promise<Response> {
 
     const token = new URL(request.url).searchParams.get('token');
     console.log(token)
-    if (token === process.env.WHEREISKEY) {
+    // @ts-expect-error env is a cf thing and ts linter is not getting it
+    if (token === env.WHEREISKEY) {
         const colo = cf?.colo || 'SFO'
         await kv.put('colo', colo);
         return new Response(`colo set to ${colo}`);
